@@ -167,6 +167,12 @@ parser.add_argument(
     choices=["ddim", "plms"],
     default="plms",
 )
+parser.add_argument(
+    "--ckpt",
+    type=str,
+    default="models/ldm/stable-diffusion-v1/model.ckpt",
+    help="path to checkpoint of model",
+)
 opt = parser.parse_args()
 
 tic = time.time()
@@ -181,7 +187,7 @@ seed_everything(opt.seed)
 # Logging
 logger(vars(opt), log_csv = "logs/txt2img_logs.csv")
 
-sd = load_model_from_config(f"{ckpt}")
+sd = load_model_from_config(f"{opt.ckpt}")
 li, lo = [], []
 for key, value in sd.items():
     sp = key.split(".")
